@@ -20,11 +20,11 @@
      
 - name: Create SCM Credential 
   command: |
-     tower-cli credential create -n "{{cred_name}}" --organization "{{org_name}}" --credential_type "source control" --user {{scm_user}}
+     tower-cli credential create -n "{{scm_cred_name}}" --organization "{{org_name}}" --credential_type "source control" --user {{scm_user}}
         
 - name: Create Homework Assignment project 
   command: |
-     tower-cli project create -n "{{proj_name}}" --organization "{{org_name}}" --scm_type "git" --scm_url {{scm_url}} --scm_branch {{scm_branch}}
+     tower-cli project create -n "{{proj_name}}" --organization "{{org_name}}" --scm_type "git" --scm_url "{{scm_url}}" --scm_branch "{{scm_branch}}"
      
 - name: Create Inventory
   command: |
