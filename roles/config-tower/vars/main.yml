@@ -42,3 +42,8 @@ aws_cred_name: "Creds for AWS instances"
 job_template_smoke_aws: "Smoke test Prod env"
 aws_smoke_app_playbook: site-smoketest-aws.yml
 
+#SCM 
+scm_cred_name: "SCM_GIT"
+
+
+
