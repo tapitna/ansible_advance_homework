@@ -24,7 +24,7 @@
         
 - name: Create Homework Assignment project 
   command: |
-     tower-cli project create -n "{{proj_name}}" --organization "{{org_name}}" --scm_type "git" --scm_url "{{scm_url}}" --scm_branch "{{scm_branch}}" --scm_credential "{{scm_cred_name}}"
+     tower-cli project create -n "{{proj_name}}" --organization "{{org_name}}" --scm-type "git" --scm-url "{{scm_url}}" --scm-branch "{{scm_branch}}" --scm-credential "{{scm_cred_name}}"
      
 - name: Create Inventory
   command: |
