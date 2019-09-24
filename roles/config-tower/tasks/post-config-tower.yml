@@ -20,7 +20,7 @@
      
 - name: Create SCM Credential 
   command: |
-     tower-cli credential create -n "{{scm_cred_name}}" --organization "{{org_name}}" --credential-type "scm" --user "{{GIT_USER}}"
+     tower-cli credential create -n "{{scm_cred_name}}" --organization "{{org_name}}" --credential-type "Source Control" --user "{{GIT_USER}}"
         
 - name: Create Homework Assignment project 
   command: |
