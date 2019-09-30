@@ -11,11 +11,14 @@
 [bastion]# OSP_GUID=<Openstack for Ansible GUID from mail>
 [bastion]# OPENTLC_LOGIN=<username-company.com>
 [bastion]# OPENTLC_PASSWORD=<your openlc account password>
-[bastion]# GITHUB_REPO=https://github.com/<githubhandler>/ansible_advance_homework
+[bastion]# GITHUB_REPO=https://github.com/tapitna/ansible_advance_homework
 [bastion]# JQ_REPO_BASE=http://www.opentlc.com/download/ansible_bootcamp
-[bastion]# REGION=<enter region name example us-east-1>
-[bastion]# RH_MAIL_ID=<your mail id for dynamic inventory tag>
-[bastion]# ansible-playbook site-config-tower.yml -e tower_GUID=${TOWER_GUID} -e osp_GUID=${OSP_GUID} -e opentlc_login=${OPENTLC_LOGIN} -e path_to_opentlc_key=/root/.ssh/mykey.pem -e param_repo_base=${JQ_REPO_BASE} -e opentlc_password=${OPENTLC_PASSWORD} -e REGION_NAME=${REGION} -e EMAIL=${RH_MAIL_ID} -e github_repo=${GITHUB_REPO}
+[bastion]# REGION=us-east-1
+[bastion]# RH_MAIL_ID=<your mail id for dynamic inventory tag
+[bastion]# GIT_USER=tapitna
+[bastion]# GIT_PASSWD=<GIT PASSWORD>
+[bastion]# ansible-playbook  site-config-tower.yml  -e tower_GUID=${TOWER_GUID} -e osp_GUID=${OSP_GUID} -e opentlc_login=${OPENTLC_LOGIN} -e path_to_opentlc_key=/root/.ssh/mykey.pem -e param_repo_base=${JQ_REPO_BASE} -e opentlc_password=${OPENTLC_PASSWORD} -e REGION_NAME=${REGION} -e EMAIL=${RH_MAIL_ID} -e github_repo=${GITHUB_REPO} -e GIT_USER=${GIT_USER} -e GIT_PASSWD=${GIT_PASSWD}
+
 ----
 
 
