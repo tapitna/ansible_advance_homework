@@ -1,0 +1,35 @@
+[tower]
+tower1.7b89.internal public_host_name=tower1.7b89.example.opentlc.com ssh_host=tower2.7b89.internal
+tower2.7b89.internal public_host_name=tower2.7b89.example.opentlc.com ssh_host=tower1.7b89.internal
+tower3.7b89.internal public_host_name=tower3.7b89.example.opentlc.com ssh_host=tower3.7b89.internal
+[database]
+support1.7b89.internal
+
+[all:vars]
+ansible_become=true
+admin_password=r3dh4t1!
+
+pg_host='support1.7b89.internal'
+pg_port='5432'
+
+pg_database='awx'
+pg_username='awx'
+pg_password=r3dh4t1!
+
+rabbitmq_port=5672
+rabbitmq_vhost=tower
+
+rabbitmq_username=tower
+rabbitmq_password=r3dh4t1
+rabbitmq_cookie=cookiemonster
+
+rabbitmq_use_long_name=true
+# BEGIN ANSIBLE MANAGED BLOCK
+[isolated_group_osp]
+workstation-f50b.rhpds.opentlc.com ansible_user='cloud-user' ansible_ssh_private_key_file='~/.ssh/openstack.pem' ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+[isolated_group_osp:vars]
+controller=tower
+# END ANSIBLE MANAGED BLOCK
+
+[workstation]
+workstation-f50b.rhpds.opentlc.com ansible_user='cloud-user' ansible_ssh_private_key_file='~/.ssh/openstack.pem' ansible_ssh_common_args='-o StrictHostKeyChecking=no'
