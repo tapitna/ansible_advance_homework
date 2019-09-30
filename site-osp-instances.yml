@@ -1,4 +1,31 @@
-- hosts: workstation
+- name: Provision OSP instances
+  hosts: workstation
   become: yes
-  roles:
-    - osp-servers
+  tasks:
+    - name: Create app1 instance
+      import_role:
+        name: osp-servers 
+        vars_from: app1.yml
+      vars:
+        instance_name: app1
+
+    - name: Create appr2 instance
+      import_role:
+        name: osp-servers 
+        vars_from: app2.yml
+      vars:
+        instance_name: app2
+
+    - name: Create db instance
+      import_role:
+        name: osp-servers 
+        vars_from: db.yml
+      vars:
+        instance_name: db 
+
+    - name: Create frontend instance
+      import_role:
+        name: osp-servers
+        vars_from: frontend.yml
+      vars:
+        instance_name: frontend 

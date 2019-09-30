@@ -1,5 +1,4 @@
 ---
-
 # tasks file for osp.servers
 - name: Create new server instances and attaches them a network and passes metadata to the instance
   os_server:
@@ -19,7 +18,6 @@
       curl -o /tmp/internal.repo http://www.opentlc.com/download/ansible_bootcamp/repo/internal.repo
       cp /tmp/internal.repo /etc/yum.repos.d/internal.repo
   register: instance_ip
-  
 
 - name: Add floating IP to Servers "{{ instance_name }}"
   os_floating_ip:
@@ -30,6 +28,7 @@
      wait: true
      timeout: 180
   register: floating_server_ip
+
 - name: Wait for serveri "{{ instance_name }}"  to be available
   wait_for:
       host: "{{ floating_server_ip.floating_ip.floating_ip_address }}"
