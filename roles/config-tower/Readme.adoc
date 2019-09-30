@@ -1,5 +1,4 @@
-Config Ansible Tower
-=========
+==== Config Ansible Tower
 This role will configure your Tower instance by creating the job templates and the workflow.
 
 
