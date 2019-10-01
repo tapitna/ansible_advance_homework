@@ -4,13 +4,14 @@
   os_server:
     cloud: ospcloud
     name: "{{ instance_name }}"
-    flavor: "{{ instance_flavor }}"
+    flavor: "osp_servers[{{ instance_name }}]['flavor']"
     key_name: ansible_ssh
     nics:
-     - net-name: "{{ int_network }}"
-    image: "{{ instance_image }}"
-    security_groups: "{{ instance_security_group }}"
-    meta: "group={{ instance_group }}, deployment_name={{ instance_stage }}"
+     - net-name: int_network
+    #image: "{{ image }}"
+    security_groups: "{{ security_group }}"
+    #meta: "group={{ instance_group }}, deployment_name={{ instance_stage }}"
+#    meta: "{{ meta }}"
     userdata: |
       #!/bin/bash
       curl -o /tmp/openstack.pub http://www.opentlc.com/download/ansible_bootcamp/openstack_keys/openstack.pub
@@ -23,8 +24,8 @@
   os_floating_ip:
      cloud: ospcloud
      state: present
-     server: "{{ instance_name }}"
-     network: "{{ ext_network }}"
+     server: "{{ name }}"
+     network: ext_network
      wait: true
      timeout: 180
   register: floating_server_ip
