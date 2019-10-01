@@ -1,5 +1,10 @@
 ---
 # tasks file for osp.servers
+- debug:
+    msg: "osp_servers.{{ instance_name }}.image"
+    msg: "User {{ item.key }} is {{ item.value.name }} ({{ item.value.image }})"
+  loop: "{{ lookup('dict', osp_servers) }}"
+
 - name: Create new server instances and attaches them a network and passes metadata to the instance
   os_server:
     cloud: ospcloud
@@ -8,10 +13,10 @@
     key_name: ansible_ssh
     nics:
      - net-name: int_network
-    #image: "{{ image }}"
-    security_groups: "{{ security_group }}"
+    image: "{{ instance_name }}.image"
+    security_groups: "osp_servers[{{ instance_name }}]['security_group']"
     #meta: "group={{ instance_group }}, deployment_name={{ instance_stage }}"
-#    meta: "{{ meta }}"
+    meta: "osp_servers[{{ instance_name }}]['meta']"
     userdata: |
       #!/bin/bash
       curl -o /tmp/openstack.pub http://www.opentlc.com/download/ansible_bootcamp/openstack_keys/openstack.pub
@@ -24,7 +29,7 @@
   os_floating_ip:
      cloud: ospcloud
      state: present
-     server: "{{ name }}"
+     server: "{{ instance_name }}"
      network: ext_network
      wait: true
      timeout: 180

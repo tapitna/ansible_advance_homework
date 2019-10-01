@@ -5,7 +5,6 @@
     - name: Create app1 instance
       include_role:
         name: osp-servers 
-        vars_from: app1.yml
       vars:
         instance_name: app1
 
