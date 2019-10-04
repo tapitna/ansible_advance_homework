@@ -17,7 +17,7 @@
      add_host:
       name: "{{ item.public_v4 }}"
       group: "{{ item.metadata.deployment_name }}"
-      ansible_ssh_extra_args: " -F ssh.cfg "
+      ansible_ssh_extra_args: " -F ~/.ssh/ssh.cfg "
 
       #      ansible_ssh_private_key_file: ~/.ssh/openstack.pem
       #  ansible_ssh_user: cloud-user
