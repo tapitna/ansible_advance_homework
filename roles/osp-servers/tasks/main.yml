@@ -25,6 +25,7 @@
 - name: Show new server detail
   debug:
     msg: "Server {{ item.item.key}} {{ item.openstack.accessIPv4 }}"
+    verbosity: 2
   loop: "{{ new_instance.results }}"
 
 - name: Add floating ip address to servers 
@@ -38,7 +39,18 @@
   loop: "{{ lookup('dict', osp_servers) }}"
   register: server_floating_ip
 
-#- name: Show floating ip
-#  debug: 
-  #  msg: "Server {{ item.item.instance_name }} "
-#  loop: "{{ new_instance.results }}"
+- name: Show floating ip
+  debug: 
+    msg: "Server: {{item.item.key}}, fixed ip: {{ item.floating_ip.fixed_ip_address}}, floating ip: {{ item.floating_ip.floating_ip_address }} "
+    verbosity: 2
+  loop: "{{ server_floating_ip.results }}"
+
+- name: Wait for server to be available
+  wait_for:
+    host: "{{ item.floating_ip.floating_ip_address }}"
+    port: 22
+    search_regex: OpenSSH
+    timeout: 600
+  delegate_to: "{{inventory_hostname}}" 
+  register: waitfor
+  loop: "{{ server_floating_ip.results }}"
