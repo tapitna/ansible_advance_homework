@@ -12,7 +12,7 @@
     image: "{{ item.value.image }}"
     security_groups: "{{ item.value.security_group }}"
     #meta: "group={{ instance_group }}, deployment_name={{ instance_stage }}"
-    meta: "group={{ item.value.group }}, deployment_name=i{{ item.value.deployment_name }}"
+    meta: "group={{ item.value.group }},deployment_name={{ item.value.deployment_name }}"
     userdata: |
       #!/bin/bash
       curl -o /tmp/openstack.pub http://www.opentlc.com/download/ansible_bootcamp/openstack_keys/openstack.pub
