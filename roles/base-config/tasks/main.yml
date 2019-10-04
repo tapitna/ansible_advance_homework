@@ -1,2 +1,15 @@
 ---
 # tasks file for base-config
+
+- name: Enable sudo 
+  replace:
+    path: /etc/sudoers
+    regexp: '^Defaults\s*requiretty'
+    replace: 'Defaults  !requiretty'
+    backup: yes
+
+- name: Add Repository servers 
+  template:
+    src: open_3-tier-app.repo.j2 
+    dest: /etc/yum.repos.d/open_3-tier-app.repo
+    mode: 0644
