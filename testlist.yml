@@ -1,0 +1,24 @@
+- name: Provision OSP instances
+  hosts: localhost 
+  vars:
+    osp_servers:
+     frontend:
+      security_group: frontend
+      meta:
+       - { group: frontends, deployment_name: QA}
+     app1:
+      security_group: app1
+      meta:
+       - { group: app1, deployment_name: QA}
+    variable:
+    - { group: app1, deployment_name: QA}
+  tasks:
+  - name: unlike with_items you will get 3 items from this loop, the 2nd one being a list
+    debug:
+      msg: "kk1 {{item.value.security_group}}" 
+    loop: "{{ lookup('dict', osp_servers) }}"
+
+  - name: loop2
+    debug:
+      msg: "{{item.group}}"
+    loop: "{{variable}}"

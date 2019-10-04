@@ -2,11 +2,14 @@
   hosts: workstation
   become: yes
   tasks:
-    - name: Create app1 instance
+    - name: Create OSP instance
       include_role:
         name: osp-servers 
-      vars:
-        instance_name: app1
+
+
+
+#      vars:
+#        instance_name: app1
 
 #    - name: Create appr2 instance
 #      include_role:

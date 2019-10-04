@@ -1,44 +1,44 @@
 ---
 # tasks file for osp.servers
-- debug:
-    msg: "osp_servers.{{ instance_name }}.image"
-    msg: "User {{ item.key }} is {{ item.value.name }} ({{ item.value.image }})"
-  loop: "{{ lookup('dict', osp_servers) }}"
 
 - name: Create new server instances and attaches them a network and passes metadata to the instance
   os_server:
     cloud: ospcloud
-    name: "{{ instance_name }}"
-    flavor: "osp_servers[{{ instance_name }}]['flavor']"
-    key_name: ansible_ssh
+    name: "{{ item.value.name }}"
+    flavor: "{{ item.value.flavor }}"
+    key_name: "{{ item.value.key_name }}" 
     nics:
      - net-name: int_network
-    image: "{{ instance_name }}.image"
-    security_groups: "osp_servers[{{ instance_name }}]['security_group']"
+    image: "{{ item.value.image }}"
+    security_groups: "{{ item.value.security_group }}"
     #meta: "group={{ instance_group }}, deployment_name={{ instance_stage }}"
-    meta: "osp_servers[{{ instance_name }}]['meta']"
+    meta: "group={{ item.value.group }}, deployment_name=i{{ item.value.deployment_name }}"
     userdata: |
       #!/bin/bash
       curl -o /tmp/openstack.pub http://www.opentlc.com/download/ansible_bootcamp/openstack_keys/openstack.pub
       cat /tmp/openstack.pub >> /home/cloud-user/.ssh/authorized_keys
       curl -o /tmp/internal.repo http://www.opentlc.com/download/ansible_bootcamp/repo/internal.repo
       cp /tmp/internal.repo /etc/yum.repos.d/internal.repo
-  register: instance_ip
+  loop: "{{ lookup('dict', osp_servers) }}"
+  register: new_instance
 
-- name: Add floating IP to Servers "{{ instance_name }}"
+- name: Show new server detail
+  debug:
+    msg: "Server {{ item.item.key}} {{ item.openstack.accessIPv4 }}"
+  loop: "{{ new_instance.results }}"
+
+- name: Add floating ip address to servers 
   os_floating_ip:
      cloud: ospcloud
      state: present
-     server: "{{ instance_name }}"
+     server: "{{ item.value.name }}"
      network: ext_network
      wait: true
      timeout: 180
-  register: floating_server_ip
+  loop: "{{ lookup('dict', osp_servers) }}"
+  register: server_floating_ip
 
-- name: Wait for serveri "{{ instance_name }}"  to be available
-  wait_for:
-      host: "{{ floating_server_ip.floating_ip.floating_ip_address }}"
-      port: 22
-      search_regex: OpenSSH
-      timeout: 600
-  delegate_to: "{{ inventory_hostname }}"
+#- name: Show floating ip
+#  debug: 
+  #  msg: "Server {{ item.item.instance_name }} "
+#  loop: "{{ new_instance.results }}"
