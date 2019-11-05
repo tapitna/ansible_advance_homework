@@ -1,17 +1,20 @@
 - hosts: workstation
   gather_facts: true
+  # Collect osp facts
   roles:
-  - name: osp-facts
+     - name: osp-facts
+  tags:
+     - inv
 
-# Setup front-end load balancer tier
-
-
+# Setup load-balancer
 - name: setup load-balancer tier
   hosts: frontends
   become: yes
   roles:
-    - {name: base-config, tags: base-config}
-    - {name: lb-tier, tags: [lbs, haproxy]}
+    - general-config
+    - lb-tier
+  tags:
+    - lb
 
 # Setup application servers tier
 
@@ -20,8 +23,10 @@
   become: yes
   gather_facts: false
   roles:
-    - {name: base-config, tags: base-config}
-    - {name: app-tier, tags: [apps, tomcat]}
+    - general-config
+    - app-tier
+  tags:
+    - app
 
 # Setup database tier
 
@@ -29,5 +34,7 @@
   become: yes
   hosts: appdbs
   roles:
-    - {name: base-config, tags: base-config}
-    - {name: db-tier, tags: [dbs, postgres]}
+    - general-config
+    - db-tier
+  tags:
+    - db

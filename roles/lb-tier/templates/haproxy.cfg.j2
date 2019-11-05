@@ -25,8 +25,5 @@ backend app-servers
     mode http
     balance roundrobin
     option forwardfor
-    #server app1 app1.{{GUID}}.internal:8080 cookie app1 check
-    #server app2 app2.{{GUID}}.internal:8080 cookie app2 check
-{% for host in ha_backend_servers %}
-    server {{ hostvars[host]['inventory_hostname_short']}} {{ hostvars[host]['inventory_hostname'] }}:{{ tomcat_port}} cookie {{ hostvars[host]['inventory_hostname_short']}} check
-{% endfor %}
+    server app1 10.10.10.15:8080 cookie app1 check
+    server app2 10.10.10.16:8080 cookie app2 check

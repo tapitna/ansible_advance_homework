@@ -1,15 +1,21 @@
 ---
-# tasks file for base-config
+# This task will run on all the servers
 
+#enable sudo
 - name: Enable sudo 
   replace:
     path: /etc/sudoers
     regexp: '^Defaults\s*requiretty'
     replace: 'Defaults  !requiretty'
     backup: yes
+  tags:
+   - sudo
 
+# Add customer repos
 - name: Add Repository servers 
   template:
     src: open_3-tier-app.repo.j2 
     dest: /etc/yum.repos.d/open_3-tier-app.repo
     mode: 0644
+  tags:
+   - repos

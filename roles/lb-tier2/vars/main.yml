@@ -1,4 +1,0 @@
----
-# vars file for lb-tier
-
-haproxy_port: 80
