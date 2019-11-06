@@ -1,8 +1,8 @@
-==== PlaybookRoles
+==== Playbook Roles
 
 
 
-.List of Playbooks
+.List of Roles
 [%header,cols=2*]
 |===
 | Files or dir | Purpose
