@@ -1,0 +1,50 @@
+==== Config Ansible Tower
+This role will configure your Tower instance by creating the job templates and the workflow.
+
+
+Requirements
+------------
+- A GITHUB repository
+- SSH access to the tower server
+- boto package 
+
+Role Variables
+--------------
+
+These variables should be defined as environmental variables:
+[source,text]
+----
+
+# TOWER_GUID=<Ansible Tower Homework GUID from mail>
+# OSP_GUID=<Openstack for Ansible GUID from mail>
+# OPENTLC_LOGIN=<username-company.com>
+# OPENTLC_PASSWORD=<your openlc account password>
+# GITHUB_REPO=https://github.com/<githubhandler>/ansible_advance_homework
+# JQ_REPO_BASE=http://www.opentlc.com/download/ansible_bootcamp
+# REGION=<enter region name example us-east-1>
+# RH_MAIL_ID=<your mail id for dynamic inventory tag>
+# GIT_USER=<your GIT HUB user>
+# GIT_PASSWD=<your GIT HUB password
+----
+
+Example Playbook
+----------------
+
+Run the playbook using the following command:
+
+[source,text]
+----
+
+# ansible-playbook  site-config-tower.yml  -e tower_GUID=${TOWER_GUID} -e osp_GUID=${OSP_GUID} -e opentlc_login=${OPENTLC_LOGIN} -e path_to_opentlc_key=/root/.ssh/mykey.pem -e param_repo_base=${JQ_REPO_BASE} -e opentlc_password=${OPENTLC_PASSWORD} -e REGION_NAME=${REGION} -e EMAIL=${RH_MAIL_ID} -e github_repo=${GITHUB_REPO} -e GIT_USER=${GIT_USER} -e GIT_PASSWD=${GIT_PASSWD}
+
+----
+
+License
+-------
+
+BSD
+
+Author Information
+------------------
+
+An optional section for the role authors to include contact information, or a website (HTML is not allowed).

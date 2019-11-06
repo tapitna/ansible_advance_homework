@@ -1,0 +1,23 @@
+---
+# tasks file for lb-tier
+- name: Install httpie
+  package:
+    name: httpie
+    state: latest
+
+- name: Install HAProxy
+  yum:
+    name: haproxy 
+    state: latest
+
+- name: Enable HAProxy
+  service:
+    name: haproxy
+    enabled: yes
+
+- name: Install configuration file for HAProxy
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+  notify:
+    - restart_haproxy
