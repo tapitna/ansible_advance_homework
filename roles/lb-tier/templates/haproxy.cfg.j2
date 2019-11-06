@@ -25,5 +25,5 @@ backend app-servers
     mode http
     balance roundrobin
     option forwardfor
-    server app1 10.10.10.15:8080 cookie app1 check
-    server app2 10.10.10.16:8080 cookie app2 check
+    server app1 app1:8080 cookie app1 check
+    server app2 app2:8080 cookie app2 check
